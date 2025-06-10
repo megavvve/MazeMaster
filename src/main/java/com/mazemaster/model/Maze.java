@@ -1,4 +1,4 @@
-package org.example;
+package com.mazemaster.model;
 
 public class Maze {
     private final int width;

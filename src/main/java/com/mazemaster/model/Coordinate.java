@@ -1,4 +1,4 @@
-package org.example;
+package com.mazemaster.model;
 
 public class Coordinate {
     private final int x;

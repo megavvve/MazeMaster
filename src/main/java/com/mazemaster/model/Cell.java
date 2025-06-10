@@ -1,4 +1,4 @@
-package org.example;
+package com.mazemaster.model;
 
 public class Cell {
     public enum Type { WALL, PASSAGE }

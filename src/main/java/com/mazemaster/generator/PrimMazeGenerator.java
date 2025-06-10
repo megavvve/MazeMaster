@@ -1,4 +1,7 @@
-package org.example;
+package com.mazemaster.generator;
+
+import com.mazemaster.model.Cell;
+import com.mazemaster.model.Maze;
 
 import java.util.ArrayList;
 import java.util.List;
