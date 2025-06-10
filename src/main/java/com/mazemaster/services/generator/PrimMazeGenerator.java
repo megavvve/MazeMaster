@@ -1,4 +1,4 @@
-package com.mazemaster.generator;
+package com.mazemaster.services.generator;
 
 import com.mazemaster.model.Cell;
 import com.mazemaster.model.Maze;
