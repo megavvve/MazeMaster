@@ -23,7 +23,5 @@ public class PathReconstruct {
         return path;
     }
 
-    private PathReconstruct() {
 
-    }
 }

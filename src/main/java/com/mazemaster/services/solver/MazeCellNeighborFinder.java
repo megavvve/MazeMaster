@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MazeCellNeighborFinder {
-    private MazeCellNeighborFinder() {
 
-    }
 
     public static List<Cell> getNeighbors(Cell cell, Maze maze) {
         List<Cell> neighbors = new ArrayList<>();
