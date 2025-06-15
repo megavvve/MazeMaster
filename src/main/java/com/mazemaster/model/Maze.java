@@ -11,6 +11,17 @@ public class Maze {
         this.grid = grid;
     }
 
+    public Maze(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.grid = new Cell[width][height];
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                this.grid[x][y] = new Cell(new Coordinate(x, y));
+            }
+        }
+    }
+
     public int getWidth() {
         return width;
     }
@@ -27,3 +38,5 @@ public class Maze {
         return grid[x][y];
     }
 }
+
+

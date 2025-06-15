@@ -1,6 +1,6 @@
-// Файл: src/main/java/com/mazemaster/example/MazeExample.java
 package com.mazemaster.example;
 
+import com.mazemaster.model.Cell;
 import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
 import com.mazemaster.services.generator.Generator;
@@ -34,7 +34,7 @@ public class MazeExample {
         int genChoice = sc.nextInt();
 
         Generator generator = (genChoice == 2) ?
-                new KruskalMazeGenerator() : new PrimMazeGenerator(height,width);
+                new KruskalMazeGenerator() : new PrimMazeGenerator();
 
         System.out.println("\nВыберите алгоритм решения:");
         System.out.println("1 - Поиск в ширину (BFS)");
@@ -46,7 +46,7 @@ public class MazeExample {
                 new BFSSolver() : new AStarSolver();
 
         System.out.println("\nГенерация лабиринта " + width + "x" + height + "...");
-        Maze maze = generator.generate(height, width);
+        Maze maze = generator.generate(width, height);
 
         MazeRenderer renderer = new MazeRenderer();
         System.out.println("\n" + renderer.render(maze));
@@ -65,9 +65,9 @@ public class MazeExample {
         Coordinate end = new Coordinate(endRow - 1, endCol - 1);
 
         System.out.println("\nПоиск пути...");
-        List<Coordinate> path = solver.solve(maze, start, end);
+        List<Cell> path = solver.solve(maze, start, end);
 
-        if (!path.isEmpty()) {
+        if (path != null && !path.isEmpty()) {
             System.out.println("\nПуть найден (" + path.size() + " шагов):");
             System.out.println(renderer.render(maze, path ));
         } else {
@@ -77,3 +77,4 @@ public class MazeExample {
         sc.close();
     }
 }
+

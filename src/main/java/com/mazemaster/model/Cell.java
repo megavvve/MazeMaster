@@ -1,31 +1,32 @@
 package com.mazemaster.model;
 
 public class Cell {
-    public enum Type { WALL, PASSAGE }
+    private final Coordinate coordinate;
+    private boolean isWall;
 
-    private final int x;
-    private final int y;
-    private Type type;
-
-    public Cell(int x, int y, Type type) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
+    public Cell(Coordinate coordinate) {
+        this.coordinate = coordinate;
+        this.isWall = true;
     }
 
-    public int getX() {
-        return x;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    public int getY() {
-        return y;
+    public boolean isWall() {
+        return isWall;
     }
 
-    public Type getType() {
-        return type;
+    public void setWall(boolean wall) {
+        isWall = wall;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    @Override
+    public String toString() {
+        return "Cell{" +
+                "coordinate=" + coordinate +
+                ", isWall=" + isWall +
+                '}' + "\n";
     }
 }
+

@@ -12,11 +12,11 @@ public class MazeRenderer implements Renderer {
         return render(maze, null);
     }
 
-    public String render(Maze maze, List<Coordinate> path) {
+    public String render(Maze maze, List<Cell> path) {
         return render(maze, path, true);
     }
 
-    public String render(Maze maze, List<Coordinate> path, boolean showCoordinates) {
+    public String render(Maze maze, List<Cell> path, boolean showCoordinates) {
         StringBuilder sb = new StringBuilder();
         int height = maze.getHeight();
         int width = maze.getWidth();
@@ -36,7 +36,7 @@ public class MazeRenderer implements Renderer {
 
             // Пробелы для выравнивания с номерами строк
             for (int i = 0; i < maxRowDigits + 1; i++) {
-                sb.append(' ');
+                sb.append(" ");
             }
             // Метки столбцов
             for (int x = 0; x < width; x++) {
@@ -44,7 +44,7 @@ public class MazeRenderer implements Renderer {
                 // Форматируем номер столбца с учетом maxColDigits
                 sb.append(COORD).append(String.format("%" + maxColDigits + "d", x+1)).append(RESET);
             }
-            sb.append('\n');
+            sb.append("\n");
 
         }
 
@@ -57,9 +57,9 @@ public class MazeRenderer implements Renderer {
             for (int x = 0; x < width; x++) {
                 Cell cell = grid[y][x];
                 String c;
-                if (cell.getType() == Cell.Type.WALL) {
+                if (cell.isWall()) { // Изменено с getType() == Cell.Type.WALL
                     c = WALL + "#" + RESET;
-                } else if (path != null && path.contains(new Coordinate(y, x))) {
+                } else if (path != null && path.contains(cell)) {
                     c = PATH + "*" + RESET;
                 } else {
                     c =  " " + RESET;
@@ -70,8 +70,10 @@ public class MazeRenderer implements Renderer {
                     sb.append(" ");
                 }
             }
-            sb.append('\n');
+            sb.append("\n");
         }
         return sb.toString();
     }
 }
+
+

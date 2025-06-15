@@ -1,6 +1,7 @@
 package com.mazemaster.services.generator;
 
 import com.mazemaster.model.Cell;
+import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
 
 import java.util.ArrayList;
@@ -12,16 +13,23 @@ public class KruskalMazeGenerator implements Generator {
     private int[] parent;
 
     @Override
-    public Maze generate(int height, int width) {
-        Cell[][] grid = new Cell[height][width];
-        Maze maze = new Maze(width, height, grid);
+    public Maze generate(int width, int height) {
+        // Проверка на валидность размеров: обе размерности должны быть > 0
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException(
+                    String.format("Неверные размеры лабиринта: width=%d, height=%d", width, height)
+            );
+        }
+
+        Maze maze = new Maze(width, height);
+        Cell[][] grid = maze.getGrid();
 
         parent = new int[width * height];
         for (int i = 0; i < parent.length; i++) {
             parent[i] = i;
             int x = i % width;
             int y = i / width;
-            grid[y][x] = new Cell(y, x, Cell.Type.WALL);
+            grid[y][x].setWall(true);
         }
 
         List<Edge> edges = new ArrayList<>();
@@ -46,10 +54,9 @@ public class KruskalMazeGenerator implements Generator {
 
             if (set1 != set2) {
                 union(set1, set2);
-                grid[edge.y1][edge.x1] = new Cell(edge.y1, edge.x1, Cell.Type.PASSAGE);
-                grid[edge.y2][edge.x2] = new Cell(edge.y2, edge.x2, Cell.Type.PASSAGE);
-                grid[(edge.y1 + edge.y2) / 2][(edge.x1 + edge.x2) / 2] = new Cell((edge.y1 + edge.y2) / 2,
-                        (edge.x1 + edge.x2) / 2, Cell.Type.PASSAGE);
+                grid[edge.y1][edge.x1].setWall(false);
+                grid[edge.y2][edge.x2].setWall(false);
+                grid[(edge.y1 + edge.y2) / 2][(edge.x1 + edge.x2) / 2].setWall(false);
             }
         }
 
@@ -84,3 +91,4 @@ public class KruskalMazeGenerator implements Generator {
         }
     }
 }
+

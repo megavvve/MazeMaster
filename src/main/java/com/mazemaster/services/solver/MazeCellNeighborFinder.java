@@ -12,22 +12,23 @@ public class MazeCellNeighborFinder {
 
     }
 
-    public static List<Coordinate> getNeighbors(Coordinate coord, Maze maze) {
-        List<Coordinate> neighbors = new ArrayList<>();
-        int x = coord.getX();
-        int y = coord.getY();
+    public static List<Cell> getNeighbors(Cell cell, Maze maze) {
+        List<Cell> neighbors = new ArrayList<>();
+        int x = cell.getCoordinate().getX();
+        int y = cell.getCoordinate().getY();
         int shift = 1;
         int[][] dirs = {{0, -shift}, {0, shift}, {-shift, 0}, {shift, 0}};
 
         for (int[] dir : dirs) {
             int nx = x + dir[0];
             int ny = y + dir[1];
-            if (nx >= 0 && ny >= 0 && nx < maze.getHeight() && ny < maze.getWidth()) {
-                if (maze.getCell(nx, ny).getType() == Cell.Type.PASSAGE) {
-                    neighbors.add(new Coordinate(nx, ny));
+            if (nx >= 0 && ny >= 0 && nx < maze.getWidth() && ny < maze.getHeight()) {
+                if (!maze.getCell(nx, ny).isWall()) {
+                    neighbors.add(maze.getCell(nx, ny));
                 }
             }
         }
         return neighbors;
     }
 }
+
