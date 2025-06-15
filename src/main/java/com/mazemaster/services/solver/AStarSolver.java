@@ -1,6 +1,5 @@
 package com.mazemaster.services.solver;
 
-import com.mazemaster.model;
 import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
 
@@ -57,7 +56,7 @@ public class AStarSolver implements Solver {
     }
 
     private List<Coordinate> reconstructPath(Map<Coordinate, Coordinate> cameFrom, Coordinate start, Coordinate end) {
-        return PathReconstructor.reconstructPath(cameFrom, start, end);
+        return PathReconstruct.reconstructPath(cameFrom, start, end);
     }
 
     private List<Coordinate> getNeighbors(Coordinate coord, Maze maze) {

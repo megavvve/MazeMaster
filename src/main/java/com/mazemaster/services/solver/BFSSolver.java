@@ -42,10 +42,10 @@ public class BFSSolver implements Solver {
     }
 
     private List<Coordinate> reconstructPath(Map<Coordinate, Coordinate> cameFrom, Coordinate start, Coordinate end) {
-        return new ArrayList<>(); //return PathReconstructor.reconstructPath(cameFrom, start, end);
+        return PathReconstruct.reconstructPath(cameFrom, start, end);
     }
 
     private List<Coordinate> getNeighbors(Coordinate coord, Maze maze) {
-        return new ArrayList<>(); //return MazeCellNeighborFinder.getNeighbors(coord, maze);
+        return MazeCellNeighborFinder.getNeighbors(coord, maze);
     }
 }

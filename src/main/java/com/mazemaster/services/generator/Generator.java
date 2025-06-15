@@ -2,6 +2,6 @@ package com.mazemaster.services.generator;
 
 import com.mazemaster.model.Maze;
 
-interface Generator {
+public interface Generator {
     public abstract Maze generate(int height, int width);
 }
