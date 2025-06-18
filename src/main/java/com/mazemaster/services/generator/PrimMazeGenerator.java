@@ -7,13 +7,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Реализация алгоритма Прима для генерации лабиринтов.
+ */
 public class PrimMazeGenerator implements Generator {
+    /**
+     * Генератор случайных чисел для выбора начальной точки и направлений.
+     */
     private final Random random = new Random();
-
+    /**
+     * Перечисление возможных направлений для создания проходов.
+     */
     private enum Direction {
         NORTH, SOUTH, EAST, WEST
     }
-
+    /**
+     * Генерирует лабиринт с использованием алгоритма Прима.
+     *
+     * @param width  ширина лабиринта
+     * @param height высота лабиринта
+     * @return сгенерированный лабиринт
+     * @throws IllegalArgumentException если ширина или высота меньше или равна нулю
+     */
     @Override
     public Maze generate(int width, int height) {
         // Проверка на валидность размеров: обе размерности должны быть > 0
@@ -58,7 +73,14 @@ public class PrimMazeGenerator implements Generator {
 
         return maze;
     }
-
+    /**
+     * Собирает пограничные клетки для текущей позиции.
+     *
+     * @param x         x-координата текущей клетки
+     * @param y         y-координата текущей клетки
+     * @param frontiers список пограничных клеток
+     * @param maze      лабиринт
+     */
     private void getFrontiers(int x, int y, List<Cell> frontiers, Maze maze) {
         int shift = 2;
         int[][] dirs = {{0, -shift}, {0, shift}, {-shift, 0}, {shift, 0}};
@@ -71,7 +93,13 @@ public class PrimMazeGenerator implements Generator {
             }
         }
     }
-
+    /**
+     * Создает проход в случайном направлении от текущей клетки к соседней непосещенной клетке.
+     *
+     * @param x    x-координата текущей клетки
+     * @param y    y-координата текущей клетки
+     * @param maze лабиринт
+     */
     private void createPassageInDirection(int x, int y, Maze maze) {
         List<Direction> dirs = new ArrayList<>(List.of(Direction.values()));
         while (!dirs.isEmpty()) {
@@ -108,7 +136,14 @@ public class PrimMazeGenerator implements Generator {
             }
         }
     }
-
+    /**
+     * Проверяет, находятся ли координаты в пределах лабиринта.
+     *
+     * @param x    x-координата
+     * @param y    y-координата
+     * @param maze лабиринт
+     * @return true, если координаты в пределах лабиринта, иначе false
+     */
     private boolean isInBounds(int x, int y, Maze maze) {
         return x >= 0 && y >= 0 && x < maze.width() && y < maze.height();
     }

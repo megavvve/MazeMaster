@@ -6,8 +6,17 @@ import com.mazemaster.model.Maze;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Утилитный класс для поиска соседних клеток в лабиринте.
+ */
 public class MazeCellNeighborFinder {
-
+    /**
+     * Возвращает список соседних клеток, которые не являются стенами.
+     *
+     * @param cell клетка, для которой ищутся соседи
+     * @param maze лабиринт, содержащий клетку
+     * @return список соседних клеток, которые не являются стенами
+     */
 
     public static List<Cell> getNeighbors(Cell cell, Maze maze) {
         List<Cell> neighbors = new ArrayList<>();

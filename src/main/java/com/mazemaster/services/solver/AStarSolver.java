@@ -14,7 +14,18 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+/**
+ * Реализация алгоритма A* для решения лабиринтов.
+ */
 public class AStarSolver implements Solver {
+    /**
+     * Решает лабиринт от начальной до конечной координаты с использованием A*.
+     *
+     * @param maze  лабиринт для решения
+     * @param start начальная координата
+     * @param end   конечная координата
+     * @return список клеток, представляющих кратчайший путь от начальной до конечной точки, или null, если путь не найден
+     */
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
         MazeUtils.checkBounds(maze, start, end);
@@ -60,11 +71,25 @@ public class AStarSolver implements Solver {
         }
         return null;
     }
-
+    /**
+     * Вычисляет эвристическое расстояние между двумя координатами (манхэттенское расстояние).
+     *
+     * @param a первая координата
+     * @param b вторая координата
+     * @return манхэттенское расстояние между координатами
+     */
     private int heuristic(Coordinate a, Coordinate b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
+    /**
+     * Восстанавливает путь от начальной до конечной клетки.
+     *
+     * @param cameFrom карта, где ключ — клетка, а значение — клетка, из которой она достигнута
+     * @param startCell начальная клетка
+     * @param endCell конечная клетка
+     * @return список клеток, представляющих путь
+     */
     private List<Cell> reconstructPath(Map<Cell, Cell> cameFrom, Cell startCell, Cell endCell) {
         List<Cell> path = new ArrayList<>();
         Cell current = endCell;
@@ -78,14 +103,37 @@ public class AStarSolver implements Solver {
         return path;
     }
 
+    /**
+     * Возвращает соседние клетки для указанной клетки.
+     *
+     * @param cell клетка, для которой ищутся соседи
+     * @param maze лабиринт, содержащий клетку
+     * @return список соседних клеток
+     */
     private List<Cell> getNeighbors(Cell cell, Maze maze) {
         return MazeCellNeighborFinder.getNeighbors(cell, maze);
     }
 
+    /**
+     * Внутренний класс для представления узла в алгоритме A*.
+     */
     private static class Node {
+        /**
+         * Клетка, связанная с узлом.
+         */
         Cell cell;
+
+        /**
+         * Оценка f (g + h) для узла.
+         */
         int fScore;
 
+        /**
+         * Создает новый узел.
+         *
+         * @param cell клетка
+         * @param fScore оценка f
+         */
         Node(Cell cell, int fScore) {
             this.cell = cell;
             this.fScore = fScore;

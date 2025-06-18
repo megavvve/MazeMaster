@@ -1,5 +1,8 @@
 package com.mazemaster.utils;
 
+/**
+ * Утилитный класс, содержащий ANSI-коды цветов для вывода в консоль.
+ */
 public final class ConsoleColors {
     public static final String RESET = "\033[0m";
     public static final String WALL = "\033[34m"; // Синий для стен

@@ -7,16 +7,40 @@ import com.mazemaster.model.Maze;
 import java.util.List;
 
 import static com.mazemaster.utils.ConsoleColors.*;
-
+/**
+ * Реализация интерфейса Renderer для отображения лабиринтов в консоли с использованием ANSI-цветов.
+ */
 public class MazeRenderer implements Renderer {
+    /**
+     * Отображает лабиринт без пути с координатами по умолчанию.
+     *
+     * @param maze лабиринт для отображения
+     * @return строковое представление лабиринта
+     */
     public String render(Maze maze) {
         return render(maze, null);
     }
 
+
+    /**
+     * Отображает лабиринт с указанным путем и координатами по умолчанию.
+     *
+     * @param maze лабиринт для отображения
+     * @param path список клеток, образующих путь, или null, если путь не отображается
+     * @return строковое представление лабиринта с выделенным путем
+     */
     public String render(Maze maze, List<Cell> path) {
         return render(maze, path, true);
     }
 
+    /**
+     * Отображает лабиринт с указанным путем и опциональным отображением координат.
+     *
+     * @param maze           лабиринт для отображения
+     * @param path           список клеток, образующих путь, или null, если путь не отображается
+     * @param showCoordinates флаг для отображения координат
+     * @return строковое представление лабиринта
+     */
     public String render(Maze maze, List<Cell> path, boolean showCoordinates) {
         StringBuilder sb = new StringBuilder();
         int height = maze.height();

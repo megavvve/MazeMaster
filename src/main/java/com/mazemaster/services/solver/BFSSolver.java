@@ -14,7 +14,18 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * Реализация алгоритма поиска в ширину (BFS) для решения лабиринтов.
+ */
 public class BFSSolver implements Solver {
+    /**
+     * Решает лабиринт от начальной до конечной координаты с использованием BFS.
+     *
+     * @param maze  лабиринт для решения
+     * @param start начальная координата
+     * @param end   конечная координата
+     * @return список клеток, представляющих кратчайший путь от начальной до конечной точки, или null, если путь не найден
+     */
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
         MazeUtils.checkBounds(maze, start, end);
@@ -46,18 +57,26 @@ public class BFSSolver implements Solver {
                 }
             }
         }
-        return null; // No path found
+        return null;
     }
 
+    /**
+     * Восстанавливает путь от начальной до конечной клетки.
+     *
+     * @param cameFrom карта, где ключ — клетка, а значение — клетка, из которой она достигнута
+     * @param startCell начальная клетка
+     * @param endCell конечная клетка
+     * @return список клеток, представляющих путь
+     */
     private List<Cell> reconstructPath(Map<Cell, Cell> cameFrom, Cell startCell, Cell endCell) {
         List<Cell> path = new ArrayList<>();
         Cell current = endCell;
         while (current != null && !current.equals(startCell)) {
-            path.add(0, current);
+            path.addFirst(current);
             current = cameFrom.get(current);
         }
         if (current != null && current.equals(startCell)) {
-            path.add(0, startCell);
+            path.addFirst(startCell);
         }
         return path;
     }

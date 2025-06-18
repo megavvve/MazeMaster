@@ -3,7 +3,18 @@ package com.mazemaster.utils;
 import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
 
+/**
+ * Утилитный класс для операций с лабиринтами, таких как проверка границ.
+ */
 public class MazeUtils {
+    /**
+     * Проверяет, находятся ли начальная и конечная координаты в пределах лабиринта.
+     *
+     * @param maze  лабиринт для проверки
+     * @param start начальная координата
+     * @param end   конечная координата
+     * @throws IllegalArgumentException если начальная или конечная координата вне границ
+     */
     public static void checkBounds(Maze maze, Coordinate start, Coordinate end) {
         int maxX = maze.width();
         int maxY = maze.height();
