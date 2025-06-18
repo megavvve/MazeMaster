@@ -31,8 +31,8 @@ public class BFSSolverTest {
 
         assertNotNull(path);
         assertFalse(path.isEmpty());
-        assertEquals(maze.getCell(start.getX(), start.getY()), path.get(0));
-        assertEquals(maze.getCell(end.getX(), end.getY()), path.get(path.size() - 1));
+        assertEquals(maze.getCell(start.x(), start.y()), path.get(0));
+        assertEquals(maze.getCell(end.x(), end.y()), path.get(path.size() - 1));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BFSSolverTest {
 
         assertNotNull(path);
         assertEquals(1, path.size());
-        assertEquals(maze.getCell(start.getX(), start.getY()), path.get(0));
+        assertEquals(maze.getCell(start.x(), start.y()), path.get(0));
     }
 
     @Test

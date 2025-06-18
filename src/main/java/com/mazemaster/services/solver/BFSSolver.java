@@ -3,6 +3,7 @@ package com.mazemaster.services.solver;
 import com.mazemaster.model.Cell;
 import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
+import com.mazemaster.utils.MazeUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,27 +17,17 @@ import java.util.Set;
 public class BFSSolver implements Solver {
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
-        int maxX = maze.getWidth();
-        int maxY = maze.getHeight();
+        MazeUtils.checkBounds(maze, start, end);
 
-        // Проверяем, находится ли стартовая координата в пределах лабиринта
-        if (start.getX() < 0 || start.getX() >= maxX ||
-                start.getY() < 0 || start.getY() >= maxY) {
-            throw new IllegalArgumentException("Стартовая координата вне границ: " + start);
-        }
-
-        // Проверяем, находится ли конечная координата в пределах лабиринта
-        if (end.getX() < 0   || end.getX() >= maxX ||
-                end.getY() < 0   || end.getY() >= maxY) {
-            throw new IllegalArgumentException("Конечная координата вне границ: " + end);
-        }
+        int maxX = maze.width();
+        int maxY = maze.height();
 
         Queue<Cell> queue = new LinkedList<>();
         Map<Cell, Cell> cameFrom = new HashMap<>();
         Set<Cell> visited = new HashSet<>();
 
-        Cell startCell = maze.getCell(start.getX(), start.getY());
-        Cell endCell = maze.getCell(end.getX(), end.getY());
+        Cell startCell = maze.getCell(start.x(), start.y());
+        Cell endCell = maze.getCell(end.x(), end.y());
 
         queue.add(startCell);
         visited.add(startCell);
@@ -75,4 +66,3 @@ public class BFSSolver implements Solver {
         return MazeCellNeighborFinder.getNeighbors(cell, maze);
     }
 }
-

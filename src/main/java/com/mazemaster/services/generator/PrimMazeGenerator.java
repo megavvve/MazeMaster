@@ -1,7 +1,6 @@
 package com.mazemaster.services.generator;
 
 import com.mazemaster.model.Cell;
-import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class PrimMazeGenerator implements Generator {
         }
 
         Maze maze = new Maze(width, height);
-        Cell[][] grid = maze.getGrid();
+        Cell[][] grid = maze.grid();
 
         Random rand = new Random();
 
@@ -45,8 +44,8 @@ public class PrimMazeGenerator implements Generator {
         while (!frontiers.isEmpty()) {
             int idx = rand.nextInt(frontiers.size());
             Cell currentCell = frontiers.get(idx);
-            int x = currentCell.getCoordinate().getX();
-            int y = currentCell.getCoordinate().getY();
+            int x = currentCell.getCoordinate().x();
+            int y = currentCell.getCoordinate().y();
 
             if (currentCell.isWall()) {
                 currentCell.setWall(false);
@@ -111,7 +110,7 @@ public class PrimMazeGenerator implements Generator {
     }
 
     private boolean isInBounds(int x, int y, Maze maze) {
-        return x >= 0 && y >= 0 && x < maze.getWidth() && y < maze.getHeight();
+        return x >= 0 && y >= 0 && x < maze.width() && y < maze.height();
     }
 }
 

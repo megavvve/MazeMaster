@@ -11,8 +11,8 @@ public class PrimMazeGeneratorTest {
         PrimMazeGenerator generator = new PrimMazeGenerator();
         Maze maze = generator.generate(5, 5);
         assertNotNull(maze);
-        assertEquals(5, maze.getWidth());
-        assertEquals(5, maze.getHeight());
+        assertEquals(5, maze.width());
+        assertEquals(5, maze.height());
     }
 
     @Test
@@ -20,8 +20,8 @@ public class PrimMazeGeneratorTest {
         PrimMazeGenerator generator = new PrimMazeGenerator();
         Maze maze = generator.generate(50, 50);
         assertNotNull(maze);
-        assertEquals(50, maze.getWidth());
-        assertEquals(50, maze.getHeight());
+        assertEquals(50, maze.width());
+        assertEquals(50, maze.height());
     }
 
     @Test

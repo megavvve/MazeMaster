@@ -22,7 +22,7 @@ public class KruskalMazeGenerator implements Generator {
         }
 
         Maze maze = new Maze(width, height);
-        Cell[][] grid = maze.getGrid();
+        Cell[][] grid = maze.grid();
 
         parent = new int[width * height];
         for (int i = 0; i < parent.length; i++) {
@@ -32,31 +32,31 @@ public class KruskalMazeGenerator implements Generator {
             grid[y][x].setWall(true);
         }
 
-        List<Edge> edges = new ArrayList<>();
+        List<CoordinatePair> edges = new ArrayList<>();
         for (int y = 0; y < height; y += 2) {
             for (int x = 0; x < width; x += 2) {
                 if (x + 2 < width) {
-                    edges.add(new Edge(x, y, x + 2, y));
+                    edges.add(new CoordinatePair(new Coordinate(x, y), new Coordinate(x + 2, y)));
                 }
                 if (y + 2 < height) {
-                    edges.add(new Edge(x, y, x, y + 2));
+                    edges.add(new CoordinatePair(new Coordinate(x, y), new Coordinate(x, y + 2)));
                 }
             }
         }
 
         Collections.shuffle(edges, new Random());
 
-        for (Edge edge : edges) {
-            int cell1 = edge.y1 * width + edge.x1;
-            int cell2 = edge.y2 * width + edge.x2;
+        for (CoordinatePair edge : edges) {
+            int cell1 = edge.start().y() * width + edge.start().x();
+            int cell2 = edge.end().y() * width + edge.end().x();
             int set1 = find(cell1);
             int set2 = find(cell2);
 
             if (set1 != set2) {
                 union(set1, set2);
-                grid[edge.y1][edge.x1].setWall(false);
-                grid[edge.y2][edge.x2].setWall(false);
-                grid[(edge.y1 + edge.y2) / 2][(edge.x1 + edge.x2) / 2].setWall(false);
+                grid[edge.start().y()][edge.start().x()].setWall(false);
+                grid[edge.end().y()][edge.end().x()].setWall(false);
+                grid[(edge.start().y() + edge.end().y()) / 2][(edge.start().x() + edge.end().x()) / 2].setWall(false);
             }
         }
 
@@ -77,18 +77,6 @@ public class KruskalMazeGenerator implements Generator {
         parent[b] = a;
     }
 
-    private class Edge {
-        int x1;
-        int y1;
-        int x2;
-        int y2;
-
-        Edge(int x1, int y1, int x2, int y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-        }
+    private record CoordinatePair(Coordinate start, Coordinate end) {
     }
 }
-

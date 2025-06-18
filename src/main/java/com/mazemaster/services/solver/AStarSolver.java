@@ -3,6 +3,7 @@ package com.mazemaster.services.solver;
 import com.mazemaster.model.Cell;
 import com.mazemaster.model.Coordinate;
 import com.mazemaster.model.Maze;
+import com.mazemaster.utils.MazeUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,28 +17,18 @@ import java.util.Set;
 public class AStarSolver implements Solver {
     @Override
     public List<Cell> solve(Maze maze, Coordinate start, Coordinate end) {
-        int maxX = maze.getWidth();
-        int maxY = maze.getHeight();
+        MazeUtils.checkBounds(maze, start, end);
 
-        // Проверяем, находится ли стартовая координата в пределах лабиринта
-        if (start.getX() < 0 || start.getX() >= maxX ||
-                start.getY() < 0 || start.getY() >= maxY) {
-            throw new IllegalArgumentException("Стартовая координата вне границ: " + start);
-        }
+        int maxX = maze.width();
+        int maxY = maze.height();
 
-        // Проверяем, находится ли конечная координата в пределах лабиринта
-        if (end.getX() < 0   || end.getX() >= maxX ||
-                end.getY() < 0   || end.getY() >= maxY) {
-            throw new IllegalArgumentException("Конечная координата вне границ: " + end);
-        }
-
-        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingInt(n -> n.f));
+        PriorityQueue<Node> openSet = new PriorityQueue<>(Comparator.comparingInt(n -> n.fScore));
         Map<Cell, Cell> cameFrom = new HashMap<>();
         Map<Cell, Integer> gScore = new HashMap<>();
         Set<Cell> closedSet = new HashSet<>();
 
-        Cell startCell = maze.getCell(start.getX(), start.getY());
-        Cell endCell = maze.getCell(end.getX(), end.getY());
+        Cell startCell = maze.getCell(start.x(), start.y());
+        Cell endCell = maze.getCell(end.x(), end.y());
 
         gScore.put(startCell, 0);
         openSet.add(new Node(startCell, heuristic(startCell.getCoordinate(), endCell.getCoordinate())));
@@ -71,7 +62,7 @@ public class AStarSolver implements Solver {
     }
 
     private int heuristic(Coordinate a, Coordinate b) {
-        return Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
     private List<Cell> reconstructPath(Map<Cell, Cell> cameFrom, Cell startCell, Cell endCell) {
@@ -91,14 +82,13 @@ public class AStarSolver implements Solver {
         return MazeCellNeighborFinder.getNeighbors(cell, maze);
     }
 
-    private class Node {
+    private static class Node {
         Cell cell;
-        int f;
+        int fScore;
 
-        Node(Cell cell, int f) {
+        Node(Cell cell, int fScore) {
             this.cell = cell;
-            this.f = f;
+            this.fScore = fScore;
         }
     }
 }
-
